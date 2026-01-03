@@ -11,7 +11,7 @@ export class RivalsService {
   constructor(
     @Inject(rivalsApiConfig.KEY)
     private readonly rivalsConfig: ConfigType<typeof rivalsApiConfig>,
-    private readonly rivalsIntance: AxiosInstance,
+    private readonly rivalsInstance: AxiosInstance,
   ) {
     const xApiKey = this.rivalsConfig.rivals_key;
 
@@ -19,7 +19,7 @@ export class RivalsService {
       throw new Error('Not sure yet');
     }
 
-    this.rivalsIntance = axios.create({
+    this.rivalsInstance = axios.create({
       baseURL: 'https://marvelrivalsapi.com/api',
       headers: {
         'x-api-key': xApiKey,
@@ -28,8 +28,8 @@ export class RivalsService {
   }
 
   private async getPlayerIdByName(name: string): Promise<string> {
-    const player: RivalsPlayerByName = await this.rivalsIntance.get(
-      `/v1${name}`,
+    const player: RivalsPlayerByName = await this.rivalsInstance.get(
+      `/v1/${name}`,
     );
 
     if (!player) {
