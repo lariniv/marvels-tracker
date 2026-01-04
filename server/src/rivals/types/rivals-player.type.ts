@@ -1,9 +1,9 @@
+import { RivalsHeroPlayerStats, RivalsHeroRanked } from './rivals-hero.type.js';
+
 export interface RivalsPlayerByName {
   uid: string;
   name: string;
 }
-
-type RivalsClasses = 'Strategist' | 'Vanguard' | 'Duelist';
 
 interface RivalsMatch {
   match_uid: string;
@@ -63,37 +63,6 @@ interface RivalsTeamMate {
   matches: number;
   wins: number;
   win_rate: string;
-}
-
-interface RivalsHeroStats {
-  hero_id: number;
-  hero_name: string; // Maybe implement hero names? prbly fetched from db
-  hero_class: RivalsClasses;
-  hero_thumbnail: string;
-  matches: number;
-  wins: number;
-  win_rate: number;
-}
-
-interface RivalsHeroesRanked {
-  hero_id: number;
-  hero_name: string; // Maybe implement hero names? prbly fetched from db
-  hero_thumbnail: string;
-  matches: number;
-  wins: number;
-  mvp: number;
-  svp: number;
-  kills: number;
-  deaths: number;
-  assists: number;
-  play_time: number;
-  damage: number;
-  heal: number;
-  damage_taken: number;
-  main_attack: {
-    total: number;
-    hits: number;
-  };
 }
 
 interface RivalsMap {
@@ -157,9 +126,9 @@ export interface RivalsPlayerById {
     };
     match_history: Array<RivalsMatch>;
     rank_history: Array<RivalsRankChange>;
-    hero_matchups: Array<RivalsHeroStats>;
+    hero_matchups: Array<RivalsHeroPlayerStats>;
     team_mates: Array<RivalsTeamMate>;
-    heroes_ranked: Array<RivalsHeroesRanked>;
+    heroes_ranked: Array<RivalsHeroRanked>;
     maps: Array<RivalsMap>;
   };
 }

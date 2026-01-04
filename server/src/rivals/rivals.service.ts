@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
 
-import rivalsApiConfig from '../config/rivals-api.config';
+import rivalsApiConfig from '../config/rivals-api.config.js';
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import type { RivalsPlayerByName } from './types/rivals-player.type';
+import type { RivalsPlayerByName } from './types/rivals-player.type.ts';
 
 @Injectable()
 export class RivalsService {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { RivalsService } from './rivals.service';
+import { RivalsService } from './rivals.service.js';
 
 @Module({
   imports: [ConfigModule],
