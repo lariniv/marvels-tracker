@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
-
 import rivalsApiConfig from '../config/rivals-api.config.js';
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
@@ -23,6 +22,7 @@ export class RivalsService {
       baseURL: 'https://marvelrivalsapi.com/api',
       headers: {
         'x-api-key': xApiKey,
+        'Content-Type': 'application/json',
       },
     });
   }
