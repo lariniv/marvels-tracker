@@ -1,13 +1,11 @@
 {
   "name": "marvels-tracker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.27.0"
+    "server:dev": "pnpm --filter server start:dev",
+    "docker:up": "docker-compose up --build",
+    "docker:down": "docker-compose down",
+    "docker:db": "docker-compose up -d postgres",
+    "migrate:dev": "docker-compose exec api npx prisma migrate dev"
+  }
 }
