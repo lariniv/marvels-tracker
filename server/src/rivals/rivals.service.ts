@@ -1,41 +1,34 @@
-import { Inject, Injectable } from '@nestjs/common';
-import type { ConfigType } from '@nestjs/config';
-import rivalsApiConfig from '../config/rivals-api.config.js';
-import type { AxiosInstance } from 'axios';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import type { AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { RivalsPlayerByName } from './types/rivals-player.type.ts';
+import { RIVALS_API_INSTANCE } from './rivals.constatnts.js';
+import { RivalsErrorResponse } from './types/rivals-error.type.js';
 
 @Injectable()
 export class RivalsService {
   constructor(
-    @Inject(rivalsApiConfig.KEY)
-    private readonly rivalsConfig: ConfigType<typeof rivalsApiConfig>,
-    private readonly rivalsInstance: AxiosInstance,
-  ) {
-    const xApiKey = this.rivalsConfig.rivals_key;
+    @Inject(RIVALS_API_INSTANCE)
+    private readonly rivalsApi: AxiosInstance,
+  ) {}
 
-    if (!xApiKey) {
-      throw new Error('Not sure yet');
+  async getPlayerIdByName(name: string): Promise<string> {
+    try {
+      const player: AxiosResponse<RivalsPlayerByName> =
+        await this.rivalsApi.get(`/v1/find-player/${name}`);
+
+      return player.data.uid;
+    } catch (err) {
+      if (axios.isAxiosError<RivalsErrorResponse>(err)) {
+        if (
+          err.response?.status === 400 &&
+          err.response?.data?.message === 'Player not found'
+        ) {
+          throw new NotFoundException();
+        }
+      }
+
+      throw err;
     }
-
-    this.rivalsInstance = axios.create({
-      baseURL: 'https://marvelrivalsapi.com/api',
-      headers: {
-        'x-api-key': xApiKey,
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-
-  private async getPlayerIdByName(name: string): Promise<string> {
-    const player: RivalsPlayerByName = await this.rivalsInstance.get(
-      `/v1/${name}`,
-    );
-
-    if (!player) {
-      throw new Error('404');
-    }
-
-    return player.uid;
   }
 }
