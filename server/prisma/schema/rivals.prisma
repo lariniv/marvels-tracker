@@ -1,0 +1,21 @@
+enum RivalsClasses {
+  Strategist @map("strategist")
+  Vanguard   @map("vanguard")
+  Duelist    @map("duelist")
+}
+
+enum RivalsAttackType {
+  MeleeHeroes      @map("melee_heroes")
+  HitscanHeroes    @map("hitscan_heroes")
+  ProjectileHeroes @map("projectile_heroes")
+}
+
+model RivalsHero {
+  id          String           @id()
+  name        String
+  real_name   String
+  imageUrl    String
+  difficulty  Int
+  role        RivalsClasses
+  attack_type RivalsAttackType
+}
