@@ -1,9 +1,11 @@
-type RivalsClasses = 'Strategist' | 'Vanguard' | 'Duelist';
-type RivalsAttackType = 'Melee Heroes' | 'Hitscan Heroes' | 'Projectile Heroes';
+import {
+  RivalsAttackType,
+  RivalsClasses,
+} from '../../generated/prisma/enums.js';
 
 export interface RivalsHeroPlayerStats {
   hero_id: number;
-  hero_name: string; // Maybe implement hero names?
+  hero_name: string;
   hero_class: RivalsClasses;
   hero_thumbnail: string;
   matches: number;
@@ -13,7 +15,7 @@ export interface RivalsHeroPlayerStats {
 
 export interface RivalsHeroRanked {
   hero_id: number;
-  hero_name: string; // Maybe implement hero names?
+  hero_name: string;
   hero_thumbnail: string;
   matches: number;
   wins: number;
@@ -37,6 +39,7 @@ export interface RivalsHero {
   name: string;
   real_name: string;
   imageUrl: string;
+  difficulty: number;
   role: RivalsClasses;
   attack_type: RivalsAttackType;
 }

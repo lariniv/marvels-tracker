@@ -6,6 +6,7 @@ import rivalsApiConfig from './config/rivals-api.config.js';
 import { UserModule } from './user/user.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { RivalsModule } from './rivals/rivals.module.js';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { RivalsModule } from './rivals/rivals.module.js';
       isGlobal: true,
       load: [rivalsApiConfig],
     }),
+    ScheduleModule.forRoot(),
     UserModule,
     PrismaModule,
     RivalsModule,
