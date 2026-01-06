@@ -7,7 +7,13 @@ export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: UserCreateDto) {
-    const user = await this.prisma.user.create({ data });
+    const user = await this.prisma.user.create({
+      data: {
+        email: '',
+        password: '',
+        ...data,
+      },
+    });
 
     if (!user) throw new Error('Could not create a user');
 

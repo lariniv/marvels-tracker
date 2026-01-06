@@ -13,7 +13,6 @@ export class UserController {
 
   @Post('/create')
   async createUser(@Body() data: UserCreateDto) {
-    console.log(data);
     return this.userService.create(data);
   }
 }
