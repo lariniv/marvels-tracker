@@ -1,4 +1,7 @@
-import { RivalsHeroPlayerStats, RivalsHeroRanked } from './rivals-hero.type.js';
+import {
+  RivalsHeroPlayerStats,
+  RivalsPlayerHeroRanked,
+} from './rivals-hero.type.js';
 
 export interface RivalsPlayerByName {
   uid: string;
@@ -42,7 +45,7 @@ interface RivalsMatch {
   };
 }
 
-interface RivalsRankChange {
+interface RivalsPlayerRankChange {
   match_time_stamp: number;
   level_progression: {
     from: number;
@@ -93,7 +96,7 @@ export interface RivalsPlayerById {
       color: string;
     };
     info: {
-      completed_achivements: string;
+      completed_achievements: string;
       login_os: 'PC';
       //more info
     };
@@ -125,10 +128,10 @@ export interface RivalsPlayerById {
       };
     };
     match_history: Array<RivalsMatch>;
-    rank_history: Array<RivalsRankChange>;
+    rank_history: Array<RivalsPlayerRankChange>;
     hero_matchups: Array<RivalsHeroPlayerStats>;
     team_mates: Array<RivalsTeamMate>;
-    heroes_ranked: Array<RivalsHeroRanked>;
+    heroes_ranked: Array<RivalsPlayerHeroRanked>;
     maps: Array<RivalsMap>;
   };
 }
