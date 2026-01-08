@@ -6,6 +6,7 @@ import axios from 'axios';
 import rivalsApiConfig from '../config/rivals-api.config.js';
 import { RivalsController } from './rivals.controller.js';
 import { RIVALS_API_INSTANCE } from './rivals.constatnts.js';
+import axiosRetry from 'axios-retry';
 
 @Module({
   imports: [ConfigModule],
@@ -19,13 +20,30 @@ import { RIVALS_API_INSTANCE } from './rivals.constatnts.js';
           throw new Error('Not sure yet');
         }
 
-        return axios.create({
+        const rivalsApi = axios.create({
           baseURL: 'https://marvelrivalsapi.com/api',
           headers: {
             'x-api-key': xApiKey,
             'Content-Type': 'application/json',
           },
         });
+
+        axiosRetry(rivalsApi, {
+          retries: 3,
+          retryDelay: (retryCount, error) => {
+            const resetHeader = error.response?.headers[
+              'x-ratelimit-reset'
+            ] as string;
+            const waitTime = resetHeader
+              ? parseInt(resetHeader) * 1000 - Date.now() + 2000
+              : 60000 * (retryCount || 1);
+
+            return Math.max(waitTime, 1000);
+          },
+          retryCondition: (error) => error.response?.status === 429,
+        });
+
+        return rivalsApi;
       },
       inject: [rivalsApiConfig.KEY],
     },
