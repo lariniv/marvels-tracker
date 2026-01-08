@@ -18,4 +18,24 @@ model RivalsHero {
   difficulty  Int
   role        RivalsClasses
   attack_type RivalsAttackType
+
+  stats RivalsHeroStats?
+}
+
+model RivalsHeroStats {
+  id                 String @id() @default(uuid(4))
+  matches            Int
+  wins               Int
+  k                  Float
+  d                  Float
+  a                  Float
+  play_time          String
+  total_hero_damage  Float
+  total_hero_heal    Float
+  total_damage_taken Float
+  session_hit_rate   Float
+  solo_kill_number   Float
+
+  hero    RivalsHero @relation(fields: [hero_id], references: [id], onDelete: Cascade)
+  hero_id String     @unique
 }
